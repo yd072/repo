@@ -34,11 +34,11 @@ jobs:
     - name: Commit and push best_ips.txt
       run: |
         # 配置 git 用户信息
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        # 使用 PAT 认证推送
-        git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git
+        # 使用 GITHUB_TOKEN 认证推送
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
         # 确保切换到正确的分支
         git checkout main  # 如果你的默认分支是 main，确保执行这个
