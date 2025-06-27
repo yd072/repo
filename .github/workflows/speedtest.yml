@@ -3,7 +3,7 @@ name: Custom IP Speed
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 /6 * * *'  # 每天UTC凌晨3点自动运行
+    - cron: '0 */6 * * *'  
 
 jobs:
   speedtest:
