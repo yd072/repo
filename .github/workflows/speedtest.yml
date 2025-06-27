@@ -1,4 +1,5 @@
 name: Custom IP Speed
+
 on:
   workflow_dispatch:
   schedule:
@@ -15,17 +16,9 @@ jobs:
         persist-credentials: true  # 保证使用 GITHUB_TOKEN
         fetch-depth: 0  # 保证全量拉取
 
-    - name: Ensure CloudflareST is available
+    - name: Ensure CloudflareST is executable
       run: |
-        if [ ! -f ./CloudflareST ]; then
-          echo "CloudflareST not found, downloading..."
-          curl -L -o cfst.tar.gz https://github.com/XIU2/CloudflareSpeedTest/releases/latest/download/CloudflareST_linux_amd64.tar.gz
-          tar -xzf cfst.tar.gz
-          chmod +x CloudflareST  # 确保文件有执行权限
-        else
-          echo "CloudflareST already exists, skipping download."
-          chmod +x ./CloudflareST  # 确保文件有执行权限
-        fi
+        chmod +x ./CloudflareST  # 确保文件有执行权限
 
     - name: Run speed test with custom IP list and parameters
       run: |
