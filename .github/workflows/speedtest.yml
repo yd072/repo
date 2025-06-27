@@ -1,4 +1,4 @@
-name: Custom IP Speed 
+name: Custom IP Speed Test with Auto Commit and Custom Params
 
 on:
   workflow_dispatch:
@@ -16,15 +16,20 @@ jobs:
         persist-credentials: true  # 保证使用 GITHUB_TOKEN
         fetch-depth: 0  # 保证全量拉取
 
-    - name: Download CloudflareSpeedTest
+    - name: Ensure CloudflareST is available
       run: |
-        curl -L -o cfst.tar.gz https://github.com/XIU2/CloudflareSpeedTest/releases/latest/download/CloudflareST_linux_amd64.tar.gz
-        tar -xzf cfst.tar.gz
-        chmod +x CloudflareST
+        if [ ! -f ./CloudflareST ]; then
+          echo "CloudflareST not found, downloading..."
+          curl -L -o cfst.tar.gz https://github.com/XIU2/CloudflareSpeedTest/releases/latest/download/CloudflareST_linux_amd64.tar.gz
+          tar -xzf cfst.tar.gz
+          chmod +x CloudflareST
+        else
+          echo "CloudflareST already exists, skipping download."
+        fi
 
     - name: Run speed test with custom IP list and parameters
       run: |
-        ./CloudflareST -f my_ips.txt -url https://download.parallels.com/desktop/v17/17.1.1-51537/ParallelsDesktop-17.1.1-51537.dmg -tl 200 -sl 10 -tp 443 -dn 10 -o result.csv
+        ./CloudflareST -f my_ips.txt -url https://cs.yoo.cloudns.be/100m -tl 200 -sl 10 -tp 443 -dn 10 -o result.csv
 
     - name: Generate best_ips.txt from CSV
       run: |
