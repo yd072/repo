@@ -13,8 +13,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        persist-credentials: true
-        fetch-depth: 0  # 保证全量拉取
+        persist-credentials: true  # 保证使用 GITHUB_TOKEN
+        fetch-depth: 0  # 保证全量拉取，避免 shallow clone 产生的问题
 
     - name: Download CloudflareSpeedTest
       run: |
@@ -37,7 +37,10 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        # 确保 push 到正确分支
+        # 使用 GitHub Token 认证推送
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+        # 确保切换到正确的分支
         git checkout main  # 如果你的默认分支是 main，确保执行这个
 
         # 如果 best_ips.txt 文件有变化，提交并 push
