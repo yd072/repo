@@ -24,7 +24,7 @@ jobs:
 
     - name: Run speed test with custom IP list and parameters
       run: |
-        ./CloudflareST -f my_ips.txt -url https://45-67-87-2.lg.looking.house/100.mb -tl 200 -sl 10 -tp 443 -dn 10 -o result.csv
+        ./CloudflareST -f my_ips.txt -url https://download.parallels.com/desktop/v17/17.1.1-51537/ParallelsDesktop-17.1.1-51537.dmg -tl 200 -sl 10 -tp 443 -dn 10 -o result.csv
 
     - name: Generate best_ips.txt from CSV
       run: |
