@@ -34,8 +34,8 @@ jobs:
     - name: Commit and push best_ips.txt
       run: |
         # 配置 git 用户信息
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
 
         # 使用 PAT 认证推送
         git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git
