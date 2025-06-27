@@ -1,4 +1,4 @@
-name: Custom IP Speed
+name: Custom IP Speed Test with Auto Commit and Custom Params
 
 on:
   workflow_dispatch:
@@ -22,9 +22,10 @@ jobs:
           echo "CloudflareST not found, downloading..."
           curl -L -o cfst.tar.gz https://github.com/XIU2/CloudflareSpeedTest/releases/latest/download/CloudflareST_linux_amd64.tar.gz
           tar -xzf cfst.tar.gz
-          chmod +x CloudflareST
+          chmod +x CloudflareST  # 确保文件有执行权限
         else
           echo "CloudflareST already exists, skipping download."
+          chmod +x ./CloudflareST  # 确保文件有执行权限
         fi
 
     - name: Run speed test with custom IP list and parameters
