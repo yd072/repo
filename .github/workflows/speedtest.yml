@@ -13,7 +13,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        persist-credentials: true  # 保证使用 GitHub 提供的默认凭证
+        persist-credentials: true  # 保证使用 GITHUB_TOKEN
+        fetch-depth: 0  # 保证全量拉取
 
     - name: Download CloudflareSpeedTest
       run: |
@@ -36,8 +37,8 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        # 手动设置远程 URL，并使用 Personal Access Token (PAT) 进行身份验证
-        git remote set-url origin https://x-access-token:${{ secrets.MY_PAT }}@github.com/yd072/repo.git
+        # 使用 GITHUB_TOKEN 认证推送
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
         # 确保切换到正确的分支
         git checkout main  # 如果你的默认分支是 main，确保执行这个
